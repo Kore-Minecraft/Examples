@@ -1,0 +1,8 @@
+# Intellij
+.idea
+
+# Amper build
+build
+
+# Kore build
+out
