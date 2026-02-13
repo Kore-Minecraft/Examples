@@ -1,0 +1,12 @@
+dependencies:
+  - io.github.ayfri.kore:kore:1.41.2-1.21.11
+  - org.jetbrains.kotlinx:kotlinx-io-core:0.8.2
+
+settings:
+  kotlin:
+    freeCompilerArgs:
+      - -Xcontext-parameters
+    version: 2.3.10
+  jvm:
+    release: 21
+    mainClass: MainKt
