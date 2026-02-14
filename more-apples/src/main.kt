@@ -32,7 +32,7 @@ val isGitHubCI get() = System.getenv("CI") != null
 fun main() {
 	dataPack("more-apples") {
 		configuration {
-			prettyPrint = true
+			prettyPrint = !isGitHubCI
 		}
 
 		iconPath = Path("more-apples/pack.png")
