@@ -27,6 +27,7 @@ private fun Predicate.withSilkTouchShears() = anyOf {
 	}
 }
 
+val isGitHubCI get() = System.getenv("CI") != null
 
 fun main() {
 	dataPack("more-apples") {
@@ -124,6 +125,9 @@ fun main() {
 			}
 		}
 
-		generate()
-	}.generateZip()
+		when {
+			isGitHubCI -> generateZip()
+			else -> generate()
+		}
+	}
 }
