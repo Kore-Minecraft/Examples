@@ -9,4 +9,3 @@ settings:
     version: 2.3.10
   jvm:
     release: 21
-    mainClass: MainKt
