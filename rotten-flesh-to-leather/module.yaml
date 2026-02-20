@@ -1,0 +1,4 @@
+product: jvm/app
+
+apply:
+  - ../example.module-template.yaml

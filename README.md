@@ -19,6 +19,17 @@ This example demonstrates how to:
 
 The datapack ensures that all leaf types have a chance to drop apples, doubling the drop rate compared to vanilla oak leaves.
 
+### [Rotten Flesh To Leather](./rotten-flesh-to-leather)
+
+A recreation of the [rotten-flesh-to-leather](https://modrinth.com/datapack/rotten-flesh-to-leather?version=1.21.10) datapack.
+
+This example demonstrates how to:
+
+- Add simple recipes (smelting and smoking).
+- Use items as ingredients and results.
+
+The datapack allows you to smoke rotten flesh for leather and smelt it for brown dye.
+
 ## How to run
 
 These examples use [Amper](https://jetbrains.github.io/amper/) as the build system.
