@@ -1,5 +1,5 @@
 dependencies:
-  - io.github.ayfri.kore:kore:2.0.0-1.21.11
+  - io.github.ayfri.kore:kore:2.0.2-1.21.11
   - org.jetbrains.kotlinx:kotlinx-io-core:0.9.0
 
 settings:
@@ -8,4 +8,6 @@ settings:
       - -Xcontext-parameters
     version: 2.3.20
   jvm:
-    release: 21
+    release: 25
+    jdk:
+      version: 25
