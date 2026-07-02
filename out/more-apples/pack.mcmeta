@@ -2,15 +2,15 @@
 	"pack": {
 		"description": "More Apples recreated using Kore, inspired by Stoupy51 MoreApples",
 		"min_format": [
-			94,
+			101,
 			1
 		],
 		"max_format": [
-			94,
+			101,
 			1
 		],
 		"pack_format": [
-			94,
+			101,
 			1
 		]
 	}
