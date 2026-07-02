@@ -1,12 +1,9 @@
 dependencies:
-  - io.github.ayfri.kore:kore:2.0.2-1.21.11
-  - org.jetbrains.kotlinx:kotlinx-io-core:0.9.0
+  - io.github.ayfri.kore:kore:2.7.0-26.1.2
 
 settings:
   kotlin:
-    freeCompilerArgs:
-      - -Xcontext-parameters
-    version: 2.3.20
+    version: 2.4.0
   jvm:
     release: 25
     jdk:
