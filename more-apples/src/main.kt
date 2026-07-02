@@ -15,8 +15,8 @@ import io.github.ayfri.kore.features.predicates.providers.uniform
 import io.github.ayfri.kore.features.predicates.sub.predicates
 import io.github.ayfri.kore.generated.Enchantments
 import io.github.ayfri.kore.generated.Items
+import io.github.ayfri.kore.iconPath
 import io.github.ayfri.kore.pack.pack
-import kotlinx.io.files.Path
 
 private fun Predicate.withSilkTouchShears() = anyOf {
 	matchTool(Items.SHEARS)
@@ -35,7 +35,7 @@ fun main() {
 			prettyPrint = !isGitHubCI
 		}
 
-		iconPath = Path("more-apples/pack.png")
+		iconPath("more-apples/pack.png")
 
 		pack {
 			supportedFormats(min = 61)

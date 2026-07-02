@@ -7,9 +7,9 @@ import io.github.ayfri.kore.features.recipes.types.result
 import io.github.ayfri.kore.features.recipes.types.smelting
 import io.github.ayfri.kore.features.recipes.types.smoking
 import io.github.ayfri.kore.generated.Items
+import io.github.ayfri.kore.iconPath
 import io.github.ayfri.kore.pack.pack
 import io.github.ayfri.kore.pack.packFormat
-import kotlinx.io.files.Path
 
 val isGitHubCI get() = System.getenv("CI") != null
 
@@ -19,7 +19,7 @@ fun main() {
 			prettyPrint = !isGitHubCI
 		}
 
-		iconPath = Path("rotten-flesh-to-leather/pack.png")
+		iconPath("rotten-flesh-to-leather/pack.png")
 
 		pack {
 			minFormat = packFormat(81)
