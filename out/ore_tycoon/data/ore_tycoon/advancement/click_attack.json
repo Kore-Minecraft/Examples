@@ -1,0 +1,10 @@
+{
+	"criteria": {
+		"click": {
+			"trigger": "minecraft:player_hurt_entity"
+		}
+	},
+	"rewards": {
+		"function": "ore_tycoon:click/attack"
+	}
+}

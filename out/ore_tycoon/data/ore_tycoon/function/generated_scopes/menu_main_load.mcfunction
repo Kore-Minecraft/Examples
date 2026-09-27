@@ -1,0 +1,1 @@
+scoreboard objectives add ore_tycoon.menu.main trigger

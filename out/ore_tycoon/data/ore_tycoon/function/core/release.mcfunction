@@ -1,0 +1,1 @@
+data merge entity @e[limit=1,tag=ot.core,type=minecraft:item_display] {interpolation_duration:4,start_interpolation:0,transformation:{left_rotation:[0.0f,0.0f,0.0f,1.0f],right_rotation:[0.0f,0.0f,0.0f,1.0f],scale:[3.0f,3.0f,3.0f],translation:[0.0f,0.0f,0.0f]}}

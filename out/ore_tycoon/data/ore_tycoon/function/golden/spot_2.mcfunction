@@ -1,0 +1,2 @@
+summon minecraft:item_display -3.5 281.0 -9.5 {item:{id:"minecraft:raw_gold_block",count:1s},transformation:[0.6f,0.0f,0.0f,0.0f,0.0f,0.6f,0.0f,0.0f,0.0f,0.0f,0.6f,0.0f,0.0f,0.0f,0.0f,1.0f],Tags:["ot.entity","ot.golden","ot.spin"],brightness:{block:15,sky:15},teleport_duration:20,Glowing:1b,glow_color_override:16767037}
+summon minecraft:interaction -3.5 280.4 -9.5 {Tags:["ot.entity","ot.click","ot.golden","ot.claim_golden"],width:1.0f,height:1.2f,response:1b}

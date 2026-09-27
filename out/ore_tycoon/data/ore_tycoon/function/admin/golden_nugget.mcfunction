@@ -1,0 +1,1 @@
+function ore_tycoon:golden/spawn

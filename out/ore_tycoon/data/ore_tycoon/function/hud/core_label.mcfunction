@@ -1,0 +1,5 @@
+scoreboard players operation #format.input ot.data = #coins ot.data
+function ore_tycoon:format/number
+data modify storage ore_tycoon:data hud.coins set from storage ore_tycoon:data hud.out
+execute if score #frenzy ot.data matches ..0 run data modify entity @e[limit=1,tag=ot.core_label,type=minecraft:text_display] text set value [{type:"nbt",bold:1b,color:"gold",interpret:1b,nbt:"hud.coins",source:"storage",storage:"ore_tycoon:data"},{type:"text",color:"gold",text:" ⛃"},{type:"text",color:"green",text:"\n+"},{type:"nbt",color:"green",interpret:1b,nbt:"hud.per_second",source:"storage",storage:"ore_tycoon:data"},{type:"text",color:"green",text:"/s"}]
+execute if score #frenzy ot.data matches 1.. run data modify entity @e[limit=1,tag=ot.core_label,type=minecraft:text_display] text set value [{type:"nbt",bold:1b,color:"gold",interpret:1b,nbt:"hud.coins",source:"storage",storage:"ore_tycoon:data"},{type:"text",color:"gold",text:" ⛃"},{type:"text",color:"green",text:"\n+"},{type:"nbt",color:"green",interpret:1b,nbt:"hud.per_second",source:"storage",storage:"ore_tycoon:data"},{type:"text",color:"green",text:"/s"},{type:"text",bold:1b,color:"light_purple",text:"  ×3"}]

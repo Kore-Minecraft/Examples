@@ -1,0 +1,85 @@
+{
+	"type": "minecraft:multi_action",
+	"title": {
+		"text": "⛏ Ore Tycoon ⛏",
+		"bold": true,
+		"color": "gold",
+		"type": "text"
+	},
+	"external_title": {
+		"text": "⛏ Ore Tycoon",
+		"color": "gold",
+		"type": "text"
+	},
+	"body": {
+		"type": "minecraft:plain_message",
+		"contents": [
+			{
+				"text": "An idle mining tycoon in the sky. ",
+				"color": "yellow",
+				"type": "text"
+			},
+			{
+				"text": "Punch the giant ore, buy drills that mine for you, evolve the core and mine a billion coins.",
+				"color": "gray",
+				"type": "text"
+			}
+		]
+	},
+	"inputs": [],
+	"actions": [
+		{
+			"action": {
+				"type": "minecraft:run_command",
+				"command": "trigger ore_tycoon.menu.main set 1"
+			},
+			"label": {
+				"text": "▶ Play",
+				"color": "green",
+				"type": "text"
+			},
+			"tooltip": "Fly to the factory, your spot here is saved"
+		},
+		{
+			"action": {
+				"type": "minecraft:run_command",
+				"command": "trigger ore_tycoon.menu.main set 2"
+			},
+			"label": {
+				"text": "↩ Leave",
+				"color": "red",
+				"type": "text"
+			},
+			"tooltip": "Go back where you clicked Play"
+		},
+		{
+			"action": {
+				"type": "minecraft:show_dialog",
+				"dialog": "ore_tycoon:main_how_to_play"
+			},
+			"label": {
+				"text": "How to play",
+				"color": "yellow",
+				"type": "text"
+			}
+		},
+		{
+			"action": {
+				"type": "minecraft:show_dialog",
+				"dialog": "ore_tycoon:main_about"
+			},
+			"label": {
+				"text": "About",
+				"color": "aqua",
+				"type": "text"
+			}
+		}
+	],
+	"exit_action": {
+		"label": {
+			"translate": "gui.done",
+			"type": "translatable"
+		},
+		"width": 200
+	}
+}

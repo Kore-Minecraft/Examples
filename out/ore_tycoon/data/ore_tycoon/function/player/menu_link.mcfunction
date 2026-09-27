@@ -1,0 +1,1 @@
+tellraw @s [{type:"text",click_event:{action:"show_dialog",dialog:"ore_tycoon:main"},color:"aqua",hover_event:{action:"show_text",value:{type:"text",color:"gray",text:"Also on the pause screen"}},text:"[☰ Open the menu]"},{type:"text",color:"gray",text:" How to play, leave the factory, credits."}]

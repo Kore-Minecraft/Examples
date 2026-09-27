@@ -1,0 +1,7 @@
+{
+	"replace": false,
+	"values": [
+		"ore_tycoon:generated_scopes/menu_main_load",
+		"ore_tycoon:generated_scopes/load"
+	]
+}

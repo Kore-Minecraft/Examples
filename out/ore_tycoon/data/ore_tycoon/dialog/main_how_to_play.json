@@ -1,0 +1,125 @@
+{
+	"type": "minecraft:multi_action",
+	"title": {
+		"text": "How to play",
+		"color": "yellow",
+		"type": "text"
+	},
+	"body": [
+		{
+			"type": "minecraft:plain_message",
+			"contents": [
+				{
+					"text": "Coins ",
+					"color": "gold",
+					"type": "text"
+				},
+				{
+					"text": "Hit or right-click the core in the middle to mine coins.",
+					"color": "gray",
+					"type": "text"
+				}
+			]
+		},
+		{
+			"type": "minecraft:plain_message",
+			"contents": [
+				{
+					"text": "Drills ",
+					"color": "aqua",
+					"type": "text"
+				},
+				{
+					"text": "Each station sells a drill mining coins every second, even while you are away. Every copy costs 15% more.",
+					"color": "gray",
+					"type": "text"
+				}
+			]
+		},
+		{
+			"type": "minecraft:plain_message",
+			"contents": [
+				{
+					"text": "Pickaxe forge ",
+					"color": "aqua",
+					"type": "text"
+				},
+				{
+					"text": "Upgrades your clicks, the best pickaxes also add a share of the production.",
+					"color": "gray",
+					"type": "text"
+				}
+			]
+		},
+		{
+			"type": "minecraft:plain_message",
+			"contents": [
+				{
+					"text": "Golden nuggets ",
+					"color": "yellow",
+					"type": "text"
+				},
+				{
+					"text": "Grab them quick for 30 seconds of production or a ×3 frenzy.",
+					"color": "gray",
+					"type": "text"
+				}
+			]
+		},
+		{
+			"type": "minecraft:plain_message",
+			"contents": [
+				{
+					"text": "Levels ",
+					"color": "green",
+					"type": "text"
+				},
+				{
+					"text": "The core evolves as you mine. Reach 1B lifetime coins to light the beacon.",
+					"color": "gray",
+					"type": "text"
+				}
+			]
+		},
+		{
+			"type": "minecraft:plain_message",
+			"contents": [
+				{
+					"text": "Prestige ",
+					"color": "light_purple",
+					"type": "text"
+				},
+				{
+					"text": "Start over at the altar for a permanent +25% bonus per star.",
+					"color": "gray",
+					"type": "text"
+				}
+			]
+		}
+	],
+	"inputs": [],
+	"actions": [
+		{
+			"action": {
+				"type": "minecraft:run_command",
+				"command": "trigger ore_tycoon.menu.main set 3"
+			},
+			"label": {
+				"text": "▶ Play",
+				"color": "green",
+				"type": "text"
+			}
+		}
+	],
+	"exit_action": {
+		"action": {
+			"type": "minecraft:show_dialog",
+			"dialog": "ore_tycoon:main"
+		},
+		"label": {
+			"translate": "gui.back",
+			"type": "translatable"
+		},
+		"width": 200
+	}
+}

@@ -1,0 +1,22 @@
+{
+	"pack": {
+		"description": [
+			{
+				"text": "Ore Tycoon",
+				"color": "gold",
+				"type": "text"
+			},
+			{
+				"text": ", an idle mining tycoon made with Kore",
+				"color": "gray",
+				"type": "text"
+			}
+		],
+		"min_format": [
+			107,
+			1
+		],
+		"max_format": 107,
+		"pack_format": 107
+	}
+}

@@ -1,0 +1,64 @@
+{
+	"type": "minecraft:multi_action",
+	"title": {
+		"text": "About",
+		"color": "aqua",
+		"type": "text"
+	},
+	"body": {
+		"type": "minecraft:plain_message",
+		"contents": [
+			{
+				"text": "Ore Tycoon is written in Kotlin with ",
+				"color": "gray",
+				"type": "text"
+			},
+			{
+				"text": "Kore",
+				"color": "gold",
+				"type": "text"
+			},
+			{
+				"text": ", a library generating Minecraft datapacks. No mods, no resource pack, pure vanilla.",
+				"color": "gray",
+				"type": "text"
+			}
+		]
+	},
+	"inputs": [],
+	"actions": [
+		{
+			"action": {
+				"type": "minecraft:open_url",
+				"url": "https://kore.ayfri.com"
+			},
+			"label": {
+				"text": "Kore website",
+				"color": "gold",
+				"type": "text"
+			}
+		},
+		{
+			"action": {
+				"type": "minecraft:open_url",
+				"url": "https://github.com/Kore-Minecraft/Examples/tree/main/ore-tycoon"
+			},
+			"label": {
+				"text": "Source code",
+				"color": "aqua",
+				"type": "text"
+			}
+		}
+	],
+	"exit_action": {
+		"action": {
+			"type": "minecraft:show_dialog",
+			"dialog": "ore_tycoon:main"
+		},
+		"label": {
+			"translate": "gui.back",
+			"type": "translatable"
+		},
+		"width": 200
+	}
+}

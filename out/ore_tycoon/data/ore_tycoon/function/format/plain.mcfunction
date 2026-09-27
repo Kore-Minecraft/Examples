@@ -1,0 +1,1 @@
+$data modify storage ore_tycoon:data hud.out set value "$(whole)$(suffix)"

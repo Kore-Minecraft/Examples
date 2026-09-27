@@ -1,0 +1,3 @@
+tag @s add ot.welcomed
+tellraw @s [{type:"text",bold:1b,color:"gold",text:"⛏ Ore Tycoon "},{type:"text",color:"dark_gray",text:"» "},{type:"text",color:"yellow",text:"Punch ores, buy drills, get rich. "},{type:"text",bold:1b,click_event:{action:"run_command",command:"/trigger ore_tycoon.menu.main set 1"},color:"green",hover_event:{action:"show_text",value:{type:"text",color:"gray",text:"Fly to the factory"}},text:"[▶ Play]"}]
+function ore_tycoon:player/menu_link

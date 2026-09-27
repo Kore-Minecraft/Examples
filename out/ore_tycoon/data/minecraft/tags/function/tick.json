@@ -1,0 +1,7 @@
+{
+	"replace": false,
+	"values": [
+		"ore_tycoon:generated_scopes/menu_main_tick",
+		"ore_tycoon:generated_scopes/tick"
+	]
+}
