@@ -3,5 +3,5 @@
 	"ingredient": "minecraft:rotten_flesh",
 	"result": "minecraft:brown_dye",
 	"experience": 0.1,
-	"cooking_time": 200
+	"cookingtime": 200
 }

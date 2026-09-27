@@ -1,9 +1,12 @@
 dependencies:
-  - io.github.ayfri.kore:kore:2.7.0-26.1.2
+  - io.github.ayfri.kore:kore:2.14.0-26.2-SNAPSHOT
+
+repositories:
+  - https://central.sonatype.com/repository/maven-snapshots/
 
 settings:
   kotlin:
-    version: 2.4.0
+    version: 2.4.20
   jvm:
     release: 25
     jdk:
