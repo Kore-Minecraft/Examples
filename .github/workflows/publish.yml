@@ -1,0 +1,101 @@
+name: Publish a datapack
+
+# A release tagged `<module>-v<version>`, e.g. `ore-tycoon-v1.0.0`, publishes that module only.
+on:
+  release:
+    types: [ published ]
+  workflow_dispatch:
+    inputs:
+      module:
+        description: "Example module to publish"
+        required: true
+        type: choice
+        options:
+          - more-apples
+          - ore-tycoon
+      version:
+        description: "Version to publish (e.g. 1.0.0)"
+        required: true
+        type: string
+
+jobs:
+  publish:
+    name: Publish ${{ inputs.module || github.ref_name }} to Modrinth
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v5
+
+      - name: Resolve the module, its version and its listing
+        id: pack
+        env:
+          MODULE: ${{ inputs.module }}
+          VERSION: ${{ inputs.version }}
+          TAG: ${{ github.ref_name }}
+        run: |
+          module="${MODULE:-${TAG%-v*}}"
+          version="${VERSION:-${TAG##*-v}}"
+          case "$module" in
+            more-apples)
+              zip=more-apples; title="More Apples (Kore)"; modrinth=PEOwL2qD; game_versions="" ;;
+            ore-tycoon)
+              zip=ore_tycoon; title="Ore Tycoon"; modrinth=ore-tycoon; game_versions="26.2" ;;
+            *)
+              echo "::error::Unknown module '$module', tag the release like ore-tycoon-v1.0.0"; exit 1 ;;
+          esac
+          changelog=""
+          [ -f "$module/CHANGELOG.md" ] && changelog="$module/CHANGELOG.md"
+          {
+            echo "module=$module"
+            echo "version=$version"
+            echo "zip=$zip"
+            echo "title=$title"
+            echo "modrinth=$modrinth"
+            echo "game_versions=$game_versions"
+            echo "changelog=$changelog"
+          } >> "$GITHUB_OUTPUT"
+
+      - name: Set up JDK 25
+        uses: actions/setup-java@v5
+        with:
+          distribution: 'temurin'
+          java-version: 25
+
+      - name: Cache Kotlin CLI & dependencies
+        uses: actions/cache@v5
+        with:
+          path: ~/.cache/JetBrains/Kotlin
+          key: ${{ runner.os }}-kotlin-${{ hashFiles('**/module.yaml', 'project.yaml', 'example.module-template.yaml', 'kotlin') }}
+          restore-keys: |
+            ${{ runner.os }}-kotlin-
+
+      - name: Make Kotlin CLI executable
+        run: chmod +x kotlin
+
+      - name: Generate the datapack zip
+        env:
+          CI: "true"
+        run: ./kotlin run -m ${{ steps.pack.outputs.module }}
+
+      - name: Name the zip after the version
+        run: mv "out/${{ steps.pack.outputs.zip }}.zip" "out/${{ steps.pack.outputs.module }}-${{ steps.pack.outputs.version }}.zip"
+
+      - name: Publish to Modrinth
+        uses: Kir-Antipov/mc-publish@v3.3
+        with:
+          name: "${{ steps.pack.outputs.title }} ${{ steps.pack.outputs.version }}"
+          version: ${{ steps.pack.outputs.version }}
+          version-type: release
+          files: out/${{ steps.pack.outputs.module }}-${{ steps.pack.outputs.version }}.zip
+          loaders: datapack
+          game-versions: ${{ steps.pack.outputs.game_versions }}
+          changelog-file: ${{ steps.pack.outputs.changelog }}
+
+          modrinth-id: ${{ steps.pack.outputs.modrinth }}
+          modrinth-token: ${{ secrets.MODRINTH_TOKEN }}
+
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          retry-attempts: 3
