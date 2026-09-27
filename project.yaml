@@ -1,3 +1,2 @@
 modules:
-  - more-apples
-  - rotten-flesh-to-leather
+  - ./*

@@ -1,5 +1,8 @@
 # Intellij
 .idea
 
-# Amper build
+# Kotlin toolchain build
 build
+
+# Zips are built and published by CI, the generated folders stay versioned to browse the output
+out/*.zip
