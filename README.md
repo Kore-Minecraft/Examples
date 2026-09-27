@@ -1,72 +1,75 @@
 # Kore Examples
 
-This repository contains various examples of Minecraft datapacks created using [Kore](https://kore.ayfri.com/), a modern Kotlin library for
-datapack development.
+Minecraft datapacks written in Kotlin with [Kore](https://kore.ayfri.com), a library that generates datapacks from a
+Kotlin DSL instead of hand-written JSON and `.mcfunction` files.
 
-Kore allows you to create complex Minecraft datapacks using Kotlin, eliminating the need to write raw JSON or `.mcfunction` files manually.
+Each folder is a standalone example, from a single recipe to a complete game. Their generated output is committed in
+[`out/`](./out), so you can compare the Kotlin with the datapack it produces.
 
 ## Examples
 
+### [Ore Tycoon](./ore-tycoon)
+
+An idle mining tycoon on a floating island: punch a giant ore, buy drills that mine for you, grab golden nuggets,
+evolve the core through 8 levels and prestige. Co-op, pure vanilla, playable in singleplayer.
+
+It shows how a full game fits together with Kore:
+
+- Clickable interaction entities detected with advancements.
+- Live holograms, a sidebar and a boss bar with formatted numbers.
+- A pause screen menu built with the `Menu` helper, usable without operator rights.
+- Scoreboard math on fake players with the `oop` module, macros, storage and a procedurally generated island.
+
 ### [More Apples](./more-apples)
 
-A recreation of the [MoreApples](https://github.com/Stoupy51/MoreApples) datapack by [Stoupy51](https://github.com/Stoupy51).
+A recreation of the [MoreApples](https://github.com/Stoupy51/MoreApples) datapack by
+[Stoupy51](https://github.com/Stoupy51): every type of leaves can drop apples, twice as often as vanilla oak leaves.
 
-This example demonstrates how to:
+It shows how to:
 
-- Modify loot tables for all types of leaves.
-- Use predicates and conditions (e.g., Silk Touch checks).
-- Generate a `.zip` datapack file automatically.
-
-The datapack ensures that all leaf types have a chance to drop apples, doubling the drop rate compared to vanilla oak leaves.
+- Override vanilla loot tables for all leaves.
+- Use predicates and conditions such as Silk Touch checks.
 
 ### [Rotten Flesh To Leather](./rotten-flesh-to-leather)
 
-A recreation of the [rotten-flesh-to-leather](https://modrinth.com/datapack/rotten-flesh-to-leather?version=1.21.10) datapack.
+A recreation of the [rotten-flesh-to-leather](https://modrinth.com/datapack/rotten-flesh-to-leather) datapack: smoke
+rotten flesh for leather and smelt it for brown dye.
 
-This example demonstrates how to:
-
-- Add simple recipes (smelting and smoking).
-- Use items as ingredients and results.
-
-The datapack allows you to smoke rotten flesh for leather and smelt it for brown dye.
+It shows how to add smelting and smoking recipes.
 
 ## How to run
 
-These examples use [Amper](https://jetbrains.github.io/amper/) as the build system.
+The examples build with the JetBrains Kotlin toolchain, whose wrapper is committed and downloads the toolchain on its
+first run.
 
-To build and generate the datapacks:
+```shell
+./kotlin run -m ore-tycoon       # Windows: .\kotlin.bat run -m ore-tycoon
+```
 
-1. Clone the repository.
-2. Run the main class in the desired example module.
-3. The generated datapacks will be located in the `out/` directory.
+The datapack is generated in `out/<pack name>`. With the `CI` environment variable set, a `.zip` is generated instead.
+
+`project.yaml` includes every folder holding a `module.yaml`, so a new example only needs its own folder.
 
 ## Installation
 
-To install one of these datapacks into your Minecraft world:
+1. Generate the datapack, or download it from Modrinth.
+2. In Minecraft, select your world, click **Edit**, then **Open World Folder**.
+3. Copy the datapack folder or `.zip` into the `datapacks` folder.
+4. Open the world, or run `/reload` if it is already open.
 
-1. **Generate the datapack**: Follow the [How to run](#how-to-run) instructions to create the `.zip` file.
-2. **Locate the file**: Find the generated `.zip` file in the `out/` directory (e.g., `out/more-apples.zip`).
-3. **Open your world folder**: In Minecraft, select your world, click **Edit**, then **Open World Folder**.
-4. **Copy to datapacks**: Move the `.zip` file into the `datapacks` folder.
-5. **Reload**: If the world is already running, use the `/reload` command.
+## Publishing
 
-## CI/CD & Publishing
+[`.github/workflows/publish.yml`](./.github/workflows/publish.yml) publishes one example to
+[Modrinth](https://modrinth.com/) per GitHub release. The release tag picks the example and the version:
+`ore-tycoon-v1.0.0` builds `ore-tycoon` and uploads `ore-tycoon-1.0.0.zip` with its `CHANGELOG.md`. The workflow can
+also be started by hand from the Actions tab.
 
-This project uses GitHub Actions to automate the publishing process to [Modrinth](https://modrinth.com/).
-
-The workflow is defined in [`.github/workflows/publish.yml`](./.github/workflows/publish.yml).
-
-### How it works
-
-1. **Trigger**: The workflow runs automatically when a new release is published or can be triggered manually via `workflow_dispatch`.
-2. **Build**: It uses [Amper](https://jetbrains.github.io/amper/) to build the project and generate the datapack files.
-3. **Publish**: The `Kir-Antipov/mc-publish` action takes the generated `.zip` files from the `out/` directory and uploads them to Modrinth.
-
-This ensures that every release of this repository is automatically available for users to download.
+The Modrinth project of each example is set in the workflow and needs a `MODRINTH_TOKEN` repository secret, see
+[`ore-tycoon/PUBLISHING.md`](./ore-tycoon/PUBLISHING.md).
 
 ## License
 
-This project is licensed under the GNU v3 License - see the [LICENSE](./LICENSE) file for details.
+This project is licensed under the GNU v3 License, see the [LICENSE](./LICENSE) file for details.
 
 ---
 Created with ❤️ using [Kore](https://kore.ayfri.com/).
