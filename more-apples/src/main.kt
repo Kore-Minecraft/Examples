@@ -1,9 +1,8 @@
+import io.github.ayfri.kore.*
 import io.github.ayfri.kore.arguments.chatcomponents.textComponent
 import io.github.ayfri.kore.arguments.components.matchers.enchantments
 import io.github.ayfri.kore.arguments.numbers.ranges.rangeOrIntStart
 import io.github.ayfri.kore.arguments.types.resources.RandomSequenceArgument
-import io.github.ayfri.kore.configuration
-import io.github.ayfri.kore.dataPack
 import io.github.ayfri.kore.features.itemmodifiers.functions.explosionDecay
 import io.github.ayfri.kore.features.itemmodifiers.functions.setCount
 import io.github.ayfri.kore.features.loottables.*
@@ -15,7 +14,6 @@ import io.github.ayfri.kore.features.predicates.providers.uniform
 import io.github.ayfri.kore.features.predicates.sub.predicates
 import io.github.ayfri.kore.generated.Enchantments
 import io.github.ayfri.kore.generated.Items
-import io.github.ayfri.kore.iconPath
 import io.github.ayfri.kore.pack.pack
 
 private fun Predicate.withSilkTouchShears() = anyOf {

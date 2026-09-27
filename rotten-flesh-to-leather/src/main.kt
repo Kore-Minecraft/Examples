@@ -1,13 +1,11 @@
+import io.github.ayfri.kore.*
 import io.github.ayfri.kore.arguments.chatcomponents.textComponent
-import io.github.ayfri.kore.configuration
-import io.github.ayfri.kore.dataPack
 import io.github.ayfri.kore.features.recipes.recipes
 import io.github.ayfri.kore.features.recipes.types.ingredient
 import io.github.ayfri.kore.features.recipes.types.result
 import io.github.ayfri.kore.features.recipes.types.smelting
 import io.github.ayfri.kore.features.recipes.types.smoking
 import io.github.ayfri.kore.generated.Items
-import io.github.ayfri.kore.iconPath
 import io.github.ayfri.kore.pack.pack
 import io.github.ayfri.kore.pack.packFormat
 
