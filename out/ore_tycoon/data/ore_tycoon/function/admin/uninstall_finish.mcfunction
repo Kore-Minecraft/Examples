@@ -10,4 +10,4 @@ team remove ot.players
 data remove storage ore_tycoon:data args
 data remove storage ore_tycoon:data hud
 data remove storage ore_tycoon:data players
-tellraw @a [{type:"text",bold:1b,color:"gold",text:"⛏ Ore Tycoon "},{type:"text",color:"dark_gray",text:"» "},{type:"text",color:"yellow",text:"The factory and its data are gone. Remove the datapack file, or it comes back on the next /reload."}]
+tellraw @a [{type:"text",text:""},{type:"text",bold:1b,color:"gold",text:"⛏ Ore Tycoon "},{type:"text",color:"dark_gray",text:"» "},{type:"text",color:"yellow",text:"The factory and its data are gone. Remove the datapack file, or it comes back on the next /reload."}]

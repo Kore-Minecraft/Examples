@@ -39,7 +39,7 @@ object Entities {
 	fun label(tier: Tier) = tagged(EntityTypes.TEXT_DISPLAY, "ot.label.${tier.id}")
 }
 
-private fun tagList(tags: Array<out String>) = nbtListOf(listOf(ENTITY) + tags)
+private fun tagList(tags: Array<out String>) = nbtListOf(ENTITY, *tags)
 
 /** Full brightness, so holograms and machines stay readable at night. The helpers' `Brightness` names the sky field `light`. */
 private fun NbtCompoundBuilder.fullBright() {

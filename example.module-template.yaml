@@ -1,5 +1,5 @@
 dependencies:
-  - io.github.ayfri.kore:kore:2.14.0-26.2-SNAPSHOT
+  - io.github.ayfri.kore:kore:2.16.0-26.2
 
 repositories:
   - https://central.sonatype.com/repository/maven-snapshots/

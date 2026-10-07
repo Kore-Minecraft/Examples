@@ -14,6 +14,7 @@
 	"body": {
 		"type": "minecraft:plain_message",
 		"contents": [
+			"",
 			{
 				"text": "An idle mining tycoon in the sky. ",
 				"color": "yellow",

@@ -12,5 +12,5 @@ execute positioned -5.5 281.9 6.5 run function ore_tycoon:generated_scopes/vfx_p
 particle dust{color:11842740,scale:1.4d} -5.5 281.9 6.5 0.4 0.4 0.4 0 24
 playsound minecraft:block.anvil.use master @s ~ ~ ~ 0.5 1.6
 playsound minecraft:entity.experience_orb.pickup master @s ~ ~ ~ 0.8
-title @s actionbar [{type:"text",color:"#b4b4b4",text:"Coal Drill bought! "},{type:"text",color:"gray",text:"You own "},{type:"score",color:"white",score:{name:"#owned.coal",objective:"ot.data"}}]
+title @s actionbar [{type:"text",text:""},{type:"text",color:"#b4b4b4",text:"Coal Drill bought! "},{type:"text",color:"gray",text:"You own "},{type:"score",color:"white",score:{name:"#owned.coal",objective:"ot.data"}}]
 function ore_tycoon:hud/labels

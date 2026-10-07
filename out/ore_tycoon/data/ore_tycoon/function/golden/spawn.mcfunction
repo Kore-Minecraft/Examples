@@ -10,4 +10,4 @@ execute if score #random ot.data matches 6 run function ore_tycoon:golden/spot_6
 execute if score #random ot.data matches 7 run function ore_tycoon:golden/spot_7
 scoreboard players set #golden_life ot.data 15
 playsound minecraft:block.amethyst_block.chime master @a[tag=ot.in] ~ ~ ~ 1 1.4
-tellraw @a[tag=ot.in] [{type:"text",bold:1b,color:"gold",text:"⛏ Ore Tycoon "},{type:"text",color:"dark_gray",text:"» "},{type:"text",color:"yellow",text:"A "},{type:"text",bold:1b,color:"gold",text:"Golden Nugget"},{type:"text",color:"yellow",text:" appeared, grab it quick!"}]
+tellraw @a[tag=ot.in] [{type:"text",text:""},{type:"text",bold:1b,color:"gold",text:"⛏ Ore Tycoon "},{type:"text",color:"dark_gray",text:"» "},{type:"text",color:"yellow",text:"A "},{type:"text",bold:1b,color:"gold",text:"Golden Nugget"},{type:"text",color:"yellow",text:" appeared, grab it quick!"}]

@@ -9,6 +9,7 @@
 		{
 			"type": "minecraft:plain_message",
 			"contents": [
+				"",
 				{
 					"text": "Coins ",
 					"color": "gold",
@@ -24,6 +25,7 @@
 		{
 			"type": "minecraft:plain_message",
 			"contents": [
+				"",
 				{
 					"text": "Drills ",
 					"color": "aqua",
@@ -39,6 +41,7 @@
 		{
 			"type": "minecraft:plain_message",
 			"contents": [
+				"",
 				{
 					"text": "Pickaxe forge ",
 					"color": "aqua",
@@ -54,6 +57,7 @@
 		{
 			"type": "minecraft:plain_message",
 			"contents": [
+				"",
 				{
 					"text": "Golden nuggets ",
 					"color": "yellow",
@@ -69,6 +73,7 @@
 		{
 			"type": "minecraft:plain_message",
 			"contents": [
+				"",
 				{
 					"text": "Levels ",
 					"color": "green",
@@ -84,6 +89,7 @@
 		{
 			"type": "minecraft:plain_message",
 			"contents": [
+				"",
 				{
 					"text": "Prestige ",
 					"color": "light_purple",

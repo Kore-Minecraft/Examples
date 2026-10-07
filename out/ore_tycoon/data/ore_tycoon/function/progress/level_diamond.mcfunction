@@ -6,4 +6,4 @@ execute positioned 0.5 280.0 0.5 run function ore_tycoon:generated_scopes/vfx_le
 title @a[tag=ot.in] title {type:"text",bold:1b,color:"gold",text:"LEVEL 5"}
 title @a[tag=ot.in] subtitle {type:"text",color:"yellow",text:"The core turned into Diamond Ore"}
 playsound minecraft:ui.toast.challenge_complete master @a[tag=ot.in]
-tellraw @a[tag=ot.in] [{type:"text",bold:1b,color:"gold",text:"⛏ Ore Tycoon "},{type:"text",color:"dark_gray",text:"» "},{type:"text",color:"green",text:"Level 5 reached, "},{type:"text",color:"yellow",text:"the core turned into Diamond Ore!"}]
+tellraw @a[tag=ot.in] [{type:"text",text:""},{type:"text",bold:1b,color:"gold",text:"⛏ Ore Tycoon "},{type:"text",color:"dark_gray",text:"» "},{type:"text",color:"green",text:"Level 5 reached, "},{type:"text",color:"yellow",text:"the core turned into Diamond Ore!"}]

@@ -4,4 +4,4 @@ apply:
   - ../example.module-template.yaml
 
 dependencies:
-  - io.github.ayfri.kore:helpers:2.14.0-26.2-SNAPSHOT
+  - io.github.ayfri.kore:helpers:2.16.0-26.2
