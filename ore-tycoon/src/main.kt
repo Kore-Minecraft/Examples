@@ -110,7 +110,7 @@ fun main() {
 		val popText = tagged(EntityTypes.TEXT_DISPLAY, "ot.pop", single = false)
 		val newPopText = tagged(EntityTypes.TEXT_DISPLAY, "ot.pop_new", single = false)
 
-		/** Every tick while the factory exists: short animations driven by the tick counter. */
+		/** Every tick while someone is in the factory: short animations driven by the tick counter, paused when it is empty. */
 		val animations = function("animations") {
 			execute {
 				ifCondition { squish.value equalTo 1 }
@@ -191,7 +191,7 @@ fun main() {
 				run { function(second) }
 			}
 			execute {
-				ifCondition { built.value equalTo 1 }
+				ifCondition { entity(insidePlayers) }
 				run { function(animations) }
 			}
 		}
@@ -221,7 +221,6 @@ fun main() {
 			function(economy.recalculate)
 			hud.sidebar.create(DisplaySlots.sidebarTeam(FormattingColor.GOLD))
 			function(hud.refresh)
-			tag(allPlayers()) { remove("ot.welcomed") }
 		}
 
 		when {

@@ -63,4 +63,3 @@ scoreboard players set $10 ot.sidebar -10
 scoreboard players display name $10 ot.sidebar {type:"text",color:"dark_gray",text:"Made with Kore"}
 scoreboard objectives setdisplay sidebar.team.gold ot.sidebar
 function ore_tycoon:hud/refresh
-tag @a remove ot.welcomed

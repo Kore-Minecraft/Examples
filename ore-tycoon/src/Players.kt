@@ -6,10 +6,8 @@ import io.github.ayfri.kore.arguments.enums.Gamemode
 import io.github.ayfri.kore.arguments.maths.vec2
 import io.github.ayfri.kore.arguments.maths.vec3
 import io.github.ayfri.kore.arguments.numbers.ranges.rangeOrIntStart
-import io.github.ayfri.kore.arguments.numbers.ticks
 import io.github.ayfri.kore.arguments.selector.SelectorArguments
 import io.github.ayfri.kore.arguments.types.literals.allPlayers
-import io.github.ayfri.kore.arguments.types.literals.rotation
 import io.github.ayfri.kore.arguments.types.literals.self
 import io.github.ayfri.kore.commands.PlaySoundMixer
 import io.github.ayfri.kore.commands.TitleLocation
@@ -20,18 +18,15 @@ import io.github.ayfri.kore.commands.function
 import io.github.ayfri.kore.commands.gamemode
 import io.github.ayfri.kore.commands.playSound
 import io.github.ayfri.kore.commands.returnIf
-import io.github.ayfri.kore.commands.schedule
 import io.github.ayfri.kore.commands.scoreboard.Operation
 import io.github.ayfri.kore.commands.scoreboard.scoreboard
 import io.github.ayfri.kore.commands.spreadPlayers
 import io.github.ayfri.kore.commands.tag
 import io.github.ayfri.kore.commands.teams
 import io.github.ayfri.kore.commands.title
-import io.github.ayfri.kore.commands.tp
 import io.github.ayfri.kore.functions.Function
 import io.github.ayfri.kore.functions.function
 import io.github.ayfri.kore.functions.macro
-import io.github.ayfri.kore.generated.Dimensions
 import io.github.ayfri.kore.generated.Effects
 import io.github.ayfri.kore.generated.SoundEvents
 import io.github.ayfri.kore.scoreboard.*
@@ -47,6 +42,9 @@ private fun SelectorArguments.inFactory() {
 }
 
 private const val WAS_SURVIVAL = "ot.was_survival"
+
+/** Puts the player on the highest ground near the world origin, under the island. */
+private fun Function.dropToGround() = spreadPlayers(vec2(0, 0), 0.0, 64.0, FLOOR_Y - 40, false, self())
 
 /**
  * Brings players to the factory and back. Each return point is saved in storage under a per-player id:
@@ -78,8 +76,22 @@ class Players(dataPack: DataPack, factory: Factory, hud: Hud) {
 		run { scoreboard.players.get(self(), PLAYER_ID) }
 	}
 
-	/** Runs as any player standing in the factory, however they got there: HUD, team and a full belly. */
+	/** Saves where the player stands, so Leave brings them back there. */
+	private val remember = dataPack.function("remember", directory = "player") {
+		idArgument()
+		function(saveReturn, arguments = STORAGE, path = "args")
+	}
+
+	/** Runs as any player standing in the factory, however they got there: adventure mode, HUD, team and a full belly. */
 	val join = dataPack.function("join", directory = "player") {
+		execute {
+			ifCondition { entity(self { gamemode = Gamemode.SURVIVAL }) }
+			run { tag(self()) { add(WAS_SURVIVAL) } }
+		}
+		execute {
+			ifCondition { entity(self { tag = WAS_SURVIVAL }) }
+			run { gamemode(Gamemode.ADVENTURE, self()) }
+		}
 		tag(self()) { add(INSIDE) }
 		teams { join(TEAM, self()) }
 		effect(self()) { giveInfinite(Effects.SATURATION, 0, true) }
@@ -101,7 +113,12 @@ class Players(dataPack: DataPack, factory: Factory, hud: Hud) {
 		tag(self()) { remove(WAS_SURVIVAL) }
 	}
 
-	val play = dataPack.function("play", directory = "player") {
+	private val enter = dataPack.function("enter", directory = "player") {
+		function(factory.arrive)
+		function(join)
+	}
+
+	val play =dataPack.function("play", directory = "player") {
 		execute {
 			unlessCondition { score(self(), PLAYER_ID, rangeOrIntStart(1)) }
 			run { nextPlayerId += 1 }
@@ -110,36 +127,25 @@ class Players(dataPack: DataPack, factory: Factory, hud: Hud) {
 			unlessCondition { score(self(), PLAYER_ID, rangeOrIntStart(1)) }
 			run { scoreboard.players.operation(self(), PLAYER_ID, Operation.SET, nextPlayerId.entity.asScoreHolder(), DATA) }
 		}
-		execute {
-			unlessCondition { entity(self { tag = INSIDE }) }
-			run { idArgument() }
+		returnIf({ entity(self { tag = WAITING }) }) {
+			actionBar(textComponent("The factory is being built...", Color.YELLOW))
 		}
 		execute {
 			unlessCondition { entity(self { tag = INSIDE }) }
-			run { function(saveReturn, arguments = STORAGE, path = "args") }
+			run { function(remember) }
 		}
-		execute {
-			ifCondition { entity(self { gamemode = Gamemode.SURVIVAL }) }
-			run { tag(self()) { add(WAS_SURVIVAL) } }
-		}
-		execute {
-			ifCondition { entity(self { tag = WAS_SURVIVAL }) }
-			run { gamemode(Gamemode.ADVENTURE, self()) }
-		}
-		execute {
-			inDimension(Dimensions.OVERWORLD)
-			run { tp(self(), vec3(ARRIVAL.first, FLOOR_Y + 1.0, ARRIVAL.second), rotation(180, 0)) }
-		}
-		execute {
-			unlessCondition { built.value equalTo 1 }
-			run { schedule(factory.build).replace(5.ticks) }
-		}
-		schedule(factory.sync).replace(20.ticks)
-		function(join)
+		returnIf({ built.value equalTo 1 }) { function(enter) }
+		tag(self()) { add(WAITING) }
+		function(factory.requestBuild)
+		actionBar(textComponent("Building the factory...", Color.YELLOW))
 	}
 
 	/** Sends the player back to where they clicked Play, or near the world origin under the island if nothing is saved. */
 	val leave = dataPack.function("leave", directory = "player") {
+		returnIf({ entity(self { tag = WAITING }) }) {
+			tag(self()) { remove(WAITING) }
+			actionBar(textComponent("Trip to the factory cancelled.", Color.GRAY))
+		}
 		returnIf({ inverted { entity(self { tag = INSIDE }) } }) {
 			actionBar(textComponent("You are not in the factory.", Color.RED))
 		}
@@ -147,9 +153,7 @@ class Players(dataPack: DataPack, factory: Factory, hud: Hud) {
 		idArgument()
 		data(STORAGE).remove("args.return")
 		function(loadReturn, arguments = STORAGE, path = "args")
-		returnIf({ inverted { data(STORAGE, "args.return.pos") } }) {
-			spreadPlayers(vec2(0, 0), 0.0, 64.0, FLOOR_Y - 40, false, self())
-		}
+		returnIf({ inverted { data(STORAGE, "args.return.pos") } }) { dropToGround() }
 		listOf("x", "y", "z").forEachIndexed { index, axis -> data(STORAGE).modify("args.$axis", STORAGE, "args.return.pos[$index]") }
 		data(STORAGE).modify("args.yaw", STORAGE, "args.return.rotation[0]")
 		data(STORAGE).modify("args.pitch", STORAGE, "args.return.rotation[1]")
@@ -158,8 +162,24 @@ class Players(dataPack: DataPack, factory: Factory, hud: Hud) {
 		actionBar(textComponent("See you soon! Your drills keep mining while you are away.", Color.GOLD))
 	}
 
-	/** Keeps the `ot.in` tag in line with where players really are. */
+	/** Runs as a player still tagged inside a factory that no longer exists, e.g. logged off before an uninstall then reinstall. */
+	private val rescue = dataPack.function("rescue", directory = "player") {
+		function(cleanup)
+		dropToGround()
+	}
+
+	/** Lands the players waiting for the island once it is built, and keeps the `ot.in` tag in line with where players really are. */
 	val second = dataPack.function("second", directory = "player") {
+		execute {
+			ifCondition { built.value equalTo 1 }
+			asTarget(allPlayers { tag = WAITING })
+			run { function(enter) }
+		}
+		execute {
+			unlessCondition { built.value equalTo 1 }
+			asTarget(insidePlayers)
+			run { function(rescue) }
+		}
 		execute {
 			asTarget(allPlayers { tag = INSIDE })
 			unlessCondition { entity(self { inFactory() }) }

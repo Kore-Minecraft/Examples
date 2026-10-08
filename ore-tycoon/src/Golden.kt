@@ -23,7 +23,6 @@ import io.github.ayfri.kore.generated.Items
 import io.github.ayfri.kore.generated.Particles
 import io.github.ayfri.kore.generated.SoundEvents
 import io.github.ayfri.kore.scoreboard.*
-import io.github.ayfri.kore.utils.set
 
 private const val GOLDEN_LIFETIME = 15
 private const val FRENZY_SECONDS = 20
@@ -41,10 +40,7 @@ class GoldenNugget(dataPack: DataPack, economy: Economy, formatter: NumberFormat
 
 	private val spots = GOLDEN_SPOTS.mapIndexed { index, (x, z) ->
 		dataPack.function("spot_$index", directory = "golden") {
-			summonItem(Items.RAW_GOLD_BLOCK, vec3(center(x), FLOOR_Y + 2.0, center(z)), 0.6f, "ot.golden", "ot.spin") {
-				this["Glowing"] = true
-				this["glow_color_override"] = 0xFFD83D
-			}
+			summonItem(Items.RAW_GOLD_BLOCK, vec3(center(x), FLOOR_Y + 2.0, center(z)), 0.6f, "ot.golden", "ot.spin", glowColor = 0xFFD83D)
 			summonInteraction(vec3(center(x), FLOOR_Y + 1.4, center(z)), 1.0f, 1.2f, "ot.golden", "ot.claim_golden")
 		}
 	}

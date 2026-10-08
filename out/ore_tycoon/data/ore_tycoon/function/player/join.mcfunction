@@ -1,3 +1,5 @@
+execute if entity @s[gamemode=survival] run tag @s add ot.was_survival
+execute if entity @s[tag=ot.was_survival] run gamemode adventure @s
 tag @s add ot.in
 team join ot.players @s
 effect give @s minecraft:saturation infinite 0 true

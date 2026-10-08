@@ -8,7 +8,10 @@ import io.github.ayfri.kore.functions.Function
 import io.github.ayfri.kore.generated.EntityTypes
 import io.github.ayfri.kore.generated.arguments.types.EntityTypeArgument
 import io.github.ayfri.kore.helpers.displays.entities.BillboardMode
+import io.github.ayfri.kore.helpers.displays.entities.Brightness
 import io.github.ayfri.kore.helpers.displays.entities.DisplayEntity
+import io.github.ayfri.kore.helpers.displays.entities.ItemDisplay
+import io.github.ayfri.kore.helpers.displays.entities.TextDisplay
 import io.github.ayfri.kore.helpers.displays.item
 import io.github.ayfri.kore.helpers.displays.itemDisplay
 import io.github.ayfri.kore.helpers.displays.maths.transformation
@@ -39,54 +42,65 @@ object Entities {
 	fun label(tier: Tier) = tagged(EntityTypes.TEXT_DISPLAY, "ot.label.${tier.id}")
 }
 
-private fun tagList(tags: Array<out String>) = nbtListOf(ENTITY, *tags)
+/** Holograms and machines stay readable at night. */
+private val FULL_BRIGHT = Brightness(block = 15, sky = 15)
 
-/** Full brightness, so holograms and machines stay readable at night. The helpers' `Brightness` names the sky field `light`. */
-private fun NbtCompoundBuilder.fullBright() {
-	this["brightness"] = nbt {
-		this["block"] = 15
-		this["sky"] = 15
-	}
-}
-
-/** The helpers' `billboardMode` is written as `billboard_mode`, a key the game ignores, so it is set here. */
-fun NbtCompoundBuilder.billboard(mode: BillboardMode) {
-	this["billboard"] = mode.name.lowercase()
-}
-
-/** Summons [display] with the NBT built by Kore's display helpers, plus pack tags and [extra] root NBT. */
-fun Function.summonDisplay(display: DisplayEntity, pos: Vec3, vararg tags: String, extra: NbtCompoundBuilder.() -> Unit = {}) =
-	summon(display.entityType, pos, NbtCompound(display.toNbt() + nbt {
-		this["Tags"] = tagList(tags)
-		fullBright()
+/** Summons [display] at full brightness with the pack tags, plus [extra] root NBT the display helpers don't cover. */
+private fun Function.summonDisplay(display: DisplayEntity, pos: Vec3, tags: Array<out String>, extra: NbtCompoundBuilder.() -> Unit) =
+	summon(display.entityType, pos, NbtCompound(display.apply { brightness = FULL_BRIGHT }.toNbt() + nbt {
+		this["Tags"] = nbtListOf(ENTITY, *tags)
 		extra()
 	}))
 
-/** A block or item floating at [pos], spinning when tagged `ot.spin`: `teleport_duration` smooths each quarter turn. */
-fun Function.summonItem(item: ItemArgument, pos: Vec3, scale: Float, vararg tags: String, extra: NbtCompoundBuilder.() -> Unit = {}) =
-	summonDisplay(itemDisplay {
-		item(item)
-		transformation { this.scale = Vec3f(scale, scale, scale) }
-	}, pos, *tags) {
-		this["teleport_duration"] = 20
-		extra()
+/**
+ * A block or item floating at [pos], spinning when tagged `ot.spin`: [teleportDuration] smooths each `tp` on the client.
+ * [glowColor] (`0xRRGGBB`) outlines it, written as raw NBT since the helpers encode `glow_color_override` as a string.
+ */
+fun Function.summonItem(
+	item: ItemArgument,
+	pos: Vec3,
+	scale: Float,
+	vararg tags: String,
+	teleportDuration: Int = 20,
+	glowColor: Int? = null,
+	configure: ItemDisplay.() -> Unit = {},
+) = summonDisplay(itemDisplay {
+	item(item)
+	transformation { this.scale = Vec3f(scale, scale, scale) }
+	configure()
+}, pos, tags) {
+	this["teleport_duration"] = teleportDuration
+	glowColor?.let {
+		this["Glowing"] = true
+		this["glow_color_override"] = it
 	}
+}
 
-/** A hologram always facing the player horizontally, its [text] resolved by the game when summoned. */
-fun Function.summonText(text: ChatComponents, pos: Vec3, scale: Float, vararg tags: String, extra: NbtCompoundBuilder.() -> Unit = {}) =
-	summonDisplay(textDisplay {
-		transformation { this.scale = Vec3f(scale, scale, scale) }
-	}, pos, *tags) {
-		billboard(BillboardMode.VERTICAL)
-		this["text"] = text.toNbtTag()
-		this["line_width"] = 400
-		extra()
-	}
+/**
+ * A hologram facing the player horizontally, its [text] resolved by the game when summoned. Without a [background], the
+ * text keeps the default dark plate, written as raw NBT since the helpers encode it as a string.
+ */
+fun Function.summonText(
+	text: ChatComponents,
+	pos: Vec3,
+	scale: Float,
+	vararg tags: String,
+	background: Int? = null,
+	configure: TextDisplay.() -> Unit = {},
+) = summonDisplay(textDisplay {
+	billboardMode = BillboardMode.VERTICAL
+	lineWidth = 400
+	transformation { this.scale = Vec3f(scale, scale, scale) }
+	configure()
+}, pos, tags) {
+	this["text"] = text.toNbtTag()
+	background?.let { this["background"] = it }
+}
 
 /** An invisible clickable box, its bottom center at [pos]: the game records who hit or used it. */
 fun Function.summonInteraction(pos: Vec3, width: Float, height: Float, vararg tags: String) =
 	summon(EntityTypes.INTERACTION, pos, nbt {
-		this["Tags"] = tagList(arrayOf("ot.click", *tags))
+		this["Tags"] = nbtListOf(ENTITY, "ot.click", *tags)
 		this["width"] = width
 		this["height"] = height
 		this["response"] = true

@@ -1,1 +1,1 @@
-function ore_tycoon:golden/spawn
+execute in minecraft:overworld run function ore_tycoon:golden/spawn

@@ -2,23 +2,29 @@ import io.github.ayfri.kore.DataPack
 import io.github.ayfri.kore.arguments.chatcomponents.text
 import io.github.ayfri.kore.arguments.chatcomponents.textComponent
 import io.github.ayfri.kore.arguments.colors.Color
+import io.github.ayfri.kore.arguments.maths.vec2
 import io.github.ayfri.kore.arguments.maths.vec3
 import io.github.ayfri.kore.arguments.numbers.ticks
+import io.github.ayfri.kore.arguments.types.literals.rotation
+import io.github.ayfri.kore.arguments.types.literals.self
 import io.github.ayfri.kore.arguments.types.resources.BlockArgument
 import io.github.ayfri.kore.commands.data
 import io.github.ayfri.kore.commands.execute.execute
 import io.github.ayfri.kore.commands.fill
+import io.github.ayfri.kore.commands.forceLoad
 import io.github.ayfri.kore.commands.function
 import io.github.ayfri.kore.commands.kill
 import io.github.ayfri.kore.commands.returnRun
 import io.github.ayfri.kore.commands.schedule
 import io.github.ayfri.kore.commands.setBlock
+import io.github.ayfri.kore.commands.tag
+import io.github.ayfri.kore.commands.tp
 import io.github.ayfri.kore.functions.Function
 import io.github.ayfri.kore.functions.function
 import io.github.ayfri.kore.generated.Blocks
+import io.github.ayfri.kore.generated.Dimensions
 import io.github.ayfri.kore.generated.Items
 import io.github.ayfri.kore.scoreboard.set
-import io.github.ayfri.kore.utils.set
 import kotlin.math.hypot
 import kotlin.math.pow
 import kotlin.random.Random
@@ -133,8 +139,8 @@ class Factory(dataPack: DataPack) {
 		summonInteraction(vec3(center(0), CORE_Y - 1.65, center(0)), 3.3f, 3.3f, "ot.use_core")
 		summonText(
 			textComponent("ORE TYCOON", Color.GOLD) { bold = true },
-			vec3(center(0), CORE_Y + 5.2, center(0)), 3f, "ot.title",
-		) { this["background"] = 0 }
+			vec3(center(0), CORE_Y + 5.2, center(0)), 3f, "ot.title", background = 0,
+		)
 		summonText(textComponent(""), vec3(center(0), CORE_Y + 2.2, center(0)), 1.4f, "ot.core_label")
 		summonText(
 			textComponent("Punch the core to mine coins", Color.YELLOW) +
@@ -193,8 +199,11 @@ class Factory(dataPack: DataPack) {
 		}
 	}
 
+	/** The chunks under the island, forceloaded while it is built and while it is uninstalled. */
+	val area = vec2(-REACH, -REACH) to vec2(REACH, REACH)
+
 	/**
-	 * Builds the whole factory once the area is loaded, which takes a few ticks after the first player arrives.
+	 * Builds the whole factory once its chunks are loaded, a few ticks after [requestBuild] forceloads them.
 	 * `execute if loaded` checks one chunk per call, so the four corners are tested.
 	 */
 	val build = dataPack.function("build", directory = "factory") {
@@ -209,5 +218,25 @@ class Factory(dataPack: DataPack) {
 		function(entities)
 		built.set(1)
 		function(sync)
+		forceLoad { remove(area.first, area.second) }
+	}
+
+	/** Players wait where they are while the island is built, instead of falling through the sky before it exists. */
+	val requestBuild = dataPack.function("request_build", directory = "factory") {
+		execute {
+			inDimension(Dimensions.OVERWORLD)
+			run { forceLoad { add(area.first, area.second) } }
+		}
+		schedule(build).replace(1.ticks)
+	}
+
+	/** Runs as a player: lands them on the island, facing the core. */
+	val arrive = dataPack.function("arrive", directory = "factory") {
+		tag(self()) { remove(WAITING) }
+		execute {
+			inDimension(Dimensions.OVERWORLD)
+			run { tp(self(), vec3(ARRIVAL.first, FLOOR_Y + 1.0, ARRIVAL.second), rotation(180, 0)) }
+		}
+		schedule(sync).replace(20.ticks)
 	}
 }

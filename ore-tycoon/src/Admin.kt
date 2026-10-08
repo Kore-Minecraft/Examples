@@ -1,7 +1,6 @@
 import io.github.ayfri.kore.DataPack
 import io.github.ayfri.kore.arguments.chatcomponents.text
 import io.github.ayfri.kore.arguments.colors.Color
-import io.github.ayfri.kore.arguments.maths.vec2
 import io.github.ayfri.kore.arguments.numbers.ticks
 import io.github.ayfri.kore.arguments.types.literals.allPlayers
 import io.github.ayfri.kore.arguments.types.literals.self
@@ -12,6 +11,7 @@ import io.github.ayfri.kore.commands.forceLoad
 import io.github.ayfri.kore.commands.function
 import io.github.ayfri.kore.commands.schedule
 import io.github.ayfri.kore.commands.scoreboard.scoreboard
+import io.github.ayfri.kore.commands.tag
 import io.github.ayfri.kore.commands.teams
 import io.github.ayfri.kore.commands.tellraw
 import io.github.ayfri.kore.functions.function
@@ -39,30 +39,32 @@ class Admin(
 		tellraw(self(), prefix() + text("Added ", Color.GREEN) + gain.text(Color.GOLD) + text(" coins.", Color.GREEN))
 	}
 
+	/** Its blocks and entities are placed at absolute coordinates, so it runs in the overworld wherever the operator is. */
 	val reset = dataPack.function("reset", directory = "admin") {
 		stars.set(0)
-		function(progress.resetRun)
+		execute {
+			inDimension(Dimensions.OVERWORLD)
+			run { function(progress.resetRun) }
+		}
 		tellraw(allPlayers(), prefix() + text("Progress reset, stars included.", Color.RED))
 	}
 
 	val nugget = dataPack.function("golden_nugget", directory = "admin") {
-		function(golden.spawn)
+		execute {
+			inDimension(Dimensions.OVERWORLD)
+			run { function(golden.spawn) }
+		}
 	}
 
-	/** Rebuilds the blocks and entities, keeping the progress. Run it from the factory so its chunks are loaded. */
+	/** Rebuilds the blocks and entities, keeping the progress, from any dimension: the island chunks are forceloaded first. */
 	val rebuild = dataPack.function("rebuild", directory = "admin") {
-		function(factory.build)
-		function(hud.refresh)
+		function(factory.requestBuild)
+		tellraw(self(), prefix() + text("Rebuilding the factory.", Color.GREEN))
 	}
-
-	private val area = vec2(-20, -20) to vec2(19, 19)
 
 	private val finishUninstall = dataPack.function("uninstall_finish", directory = "admin") {
 		function(factory.clear)
-		execute {
-			inDimension(Dimensions.OVERWORLD)
-			run { forceLoad.remove(area.first, area.second) }
-		}
+		forceLoad { remove(factory.area.first, factory.area.second) }
 		listOf(DATA, AGE, PLAYER_ID, hud.sidebar.objective, menu.objective).forEach { scoreboard.objectives.remove(it) }
 		bossBar(hud.bossBar) { remove() }
 		teams { remove(TEAM) }
@@ -79,9 +81,10 @@ class Admin(
 			asTarget(insidePlayers)
 			run { function(players.leave) }
 		}
+		tag(allPlayers()) { remove(WAITING) }
 		execute {
 			inDimension(Dimensions.OVERWORLD)
-			run { forceLoad.add(area.first, area.second) }
+			run { forceLoad { add(factory.area.first, factory.area.second) } }
 		}
 		schedule(finishUninstall).replace(40.ticks)
 		tellraw(allPlayers(), prefix() + text("Uninstalling...", Color.YELLOW))

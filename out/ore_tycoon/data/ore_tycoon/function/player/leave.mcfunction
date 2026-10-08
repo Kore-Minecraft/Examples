@@ -1,3 +1,4 @@
+execute if entity @s[tag=ot.waiting] run return run function ore_tycoon:generated_scopes/generated_8123a070
 execute unless entity @s[tag=ot.in] run return run title @s actionbar {type:"text",color:"red",text:"You are not in the factory."}
 function ore_tycoon:player/cleanup
 execute store result storage ore_tycoon:data args.id int 1 run scoreboard players get @s ot.pid

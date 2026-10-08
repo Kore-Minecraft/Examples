@@ -1,2 +1,2 @@
-function ore_tycoon:factory/build
-function ore_tycoon:hud/refresh
+function ore_tycoon:factory/request_build
+tellraw @s [{type:"text",text:""},{type:"text",bold:1b,color:"gold",text:"⛏ Ore Tycoon "},{type:"text",color:"dark_gray",text:"» "},{type:"text",color:"green",text:"Rebuilding the factory."}]

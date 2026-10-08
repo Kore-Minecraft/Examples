@@ -4,8 +4,8 @@ An idle mining tycoon floating in the sky, in pure vanilla Minecraft: no mods, n
 to mine coins, buy drills that keep mining while you are away, upgrade your pickaxe, evolve the core and mine a
 billion coins. Friends share the same factory, so it doubles as a co-op game.
 
-Written in Kotlin with [Kore](https://kore.ayfri.com): 1,700 lines of Kotlin generate 110 datapack files and more than
-3,000 commands.
+Written in Kotlin with [Kore](https://kore.ayfri.com): 1,800 lines of Kotlin generate 116 datapack files and more than
+3,100 commands.
 
 ## Features
 
@@ -34,8 +34,10 @@ Minecraft **Java 26.2**.
    when creating a new world. Cheats are not needed.
 3. Open the world and click **[▶ Play]** in the chat, or press <kbd>Esc</kbd> and click **Ore Tycoon**.
 
-The factory builds itself above `x=0 z=0`, at `y=280`. Survival players are switched to adventure mode inside it, so the
-island can't be broken, and get their gamemode back when they leave.
+The factory builds itself above `x=0 z=0`, at `y=280`, on the first Play: its chunks are forceloaded and players wait
+where they are until it stands. Building replaces every block from `x=-19 z=-19` to `x=19 z=19` between `y=265` and
+`y=287`. Survival players are switched to adventure mode inside it, so the island can't be broken, and get their gamemode
+back when they leave.
 
 > Added to a world that is already open? `/reload` loads the game and the chat **[▶ Play]** link, but the menu
 > only shows up after leaving and rejoining the world: Minecraft registers dialogs when a world loads.
@@ -50,7 +52,9 @@ island can't be broken, and get their gamemode back when they leave.
 | `/function ore_tycoon:admin/reset`                 | Resets the progress, stars included.                          |
 | `/function ore_tycoon:admin/uninstall`             | Sends everyone home and deletes the factory and all its data. |
 
-Run `uninstall` before removing the zip, otherwise the island stays in the sky.
+Run `uninstall` before removing the zip, otherwise the island stays in the sky, and while everyone who played is online:
+a player who logged off in the factory comes back mid-air once the pack is gone. As long as the pack is installed,
+players stuck in a factory that no longer exists are dropped to the ground.
 
 ## Build
 
@@ -85,7 +89,7 @@ The pack is generated in `out/ore_tycoon`. With the `CI` environment variable se
 ### Kore features used
 
 - **Core DSL**: functions, `load`/`tick`, `execute` chains with `return`, scoreboards, storage, `summon`, `fill`,
-  particles, sounds, titles, teams, boss bars, macros (`macro("id")` in NBT paths and `tp` arguments).
+  `forceload`, particles, sounds, titles, teams, boss bars, macros (`macro("id")` in NBT paths and `tp` arguments).
 - **Data-driven features**: advancements (`player_interacted_with_entity`, `player_hurt_entity`), dialogs and a
   dialog tag.
 - **`oop` module**: `ScoreboardEntity` math between scores (`coins -= cost`, `gain maxWith ...`) on fake players.

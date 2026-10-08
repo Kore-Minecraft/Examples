@@ -1,5 +1,5 @@
 function ore_tycoon:factory/clear
-execute in minecraft:overworld run forceload remove -20 -20 19 19
+forceload remove -19 -19 19 19
 scoreboard objectives remove ot.data
 scoreboard objectives remove ot.age
 scoreboard objectives remove ot.pid

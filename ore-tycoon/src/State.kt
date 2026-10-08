@@ -19,6 +19,9 @@ const val ENTITY = "ot.entity"
 /** Players currently inside the factory. */
 const val INSIDE = "ot.in"
 
+/** Players who clicked Play before the island existed, landed on it once it is built. */
+const val WAITING = "ot.waiting"
+
 const val TEAM = "ot.players"
 
 /** All NBT of the pack: `hud` holds formatted numbers, `args` macro arguments, `players` return points. */

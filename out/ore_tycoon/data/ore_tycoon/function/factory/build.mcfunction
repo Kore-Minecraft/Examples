@@ -7,3 +7,4 @@ function ore_tycoon:factory/blocks
 function ore_tycoon:factory/entities
 scoreboard players set #built ot.data 1
 function ore_tycoon:factory/sync
+forceload remove -19 -19 19 19

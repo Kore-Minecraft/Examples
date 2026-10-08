@@ -12,7 +12,6 @@ import io.github.ayfri.kore.functions.function
 import io.github.ayfri.kore.generated.EntityTypes
 import io.github.ayfri.kore.generated.Particles
 import io.github.ayfri.kore.helpers.displays.entities.BillboardMode
-import io.github.ayfri.kore.utils.set
 
 /**
  * Each second, every owned drill throws its ore to the core: up and forward, then into the core. Each hop is a plain
@@ -33,9 +32,8 @@ class Flyers(dataPack: DataPack) {
 			execute {
 				ifCondition { owned.getValue(tier).value greaterThanOrEqualTo 1 }
 				run {
-					summonItem(tier.product, vec3(center(tier.x), FLOOR_Y + 2.9, center(tier.z)), 0.45f, "ot.flyer", "ot.flyer_0") {
-						this["teleport_duration"] = 9
-						billboard(BillboardMode.CENTER)
+					summonItem(tier.product, vec3(center(tier.x), FLOOR_Y + 2.9, center(tier.z)), 0.45f, "ot.flyer", "ot.flyer_0", teleportDuration = 9) {
+						billboardMode = BillboardMode.CENTER
 					}
 				}
 			}

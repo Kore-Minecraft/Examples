@@ -40,7 +40,8 @@
 > - A clean uninstall command
 >
 > **How to start**: add the pack to your world while it is closed, open it and click **[▶ Play]** in the chat, or press
-> Esc and click **Ore Tycoon**.
+> Esc and click **Ore Tycoon**. The island is built above `x=0 z=0` between `y=265` and `y=287`, replacing whatever
+> stands there.
 >
 > Written in Kotlin with [Kore](https://kore.ayfri.com), the source is open on
 > [GitHub](https://github.com/Kore-Minecraft/Examples/tree/main/ore-tycoon).

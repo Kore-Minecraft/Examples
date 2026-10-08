@@ -16,16 +16,14 @@ import io.github.ayfri.kore.functions.function
 import io.github.ayfri.kore.generated.SoundEvents
 import io.github.ayfri.kore.helpers.displays.entities.BillboardMode
 import io.github.ayfri.kore.scoreboard.*
-import io.github.ayfri.kore.utils.set
 
 /** The giant ore in the middle: every hit mines coins, squashes it and throws a floating `+N` at the player. */
 class Core(dataPack: DataPack, economy: Economy, formatter: NumberFormatter, hud: Hud) {
 	/** Runs at the hit point: a `+N` text that the tick loop lifts and fades, and chips of the current core block. */
 	private val burst = dataPack.function("burst", directory = "core") {
-		summonText(textComponent("+", Color.GOLD) + hudText("gain", Color.GOLD, bold = true), vec3(), 0.9f, "ot.pop", "ot.pop_new") {
-			billboard(BillboardMode.CENTER)
-			this["background"] = 0
-			this["shadow"] = true
+		summonText(textComponent("+", Color.GOLD) + hudText("gain", Color.GOLD, bold = true), vec3(), 0.9f, "ot.pop", "ot.pop_new", background = 0) {
+			billboardMode = BillboardMode.CENTER
+			shadow = true
 		}
 		Level.entries.forEach { stage ->
 			execute {
