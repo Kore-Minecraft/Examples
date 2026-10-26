@@ -14,8 +14,8 @@ import io.github.ayfri.kore.scoreboard.ScoreboardEntity
 
 const val COIN = "⛃"
 
-/** The SNBT escape of a line break: a raw newline in a text would split the function line in two. */
-const val NEWLINE = "\\n"
+/** Kore writes it as the SNBT `\n` escape, so the function line stays whole. */
+const val NEWLINE = "\n"
 
 val insidePlayers = allPlayers { tag = INSIDE }
 
