@@ -1,5 +1,5 @@
-execute if entity @s[tag=ot.waiting] run return run function ore_tycoon:generated_scopes/generated_8123a070
-execute unless entity @s[tag=ot.in] run return run title @s actionbar {type:"text",color:"red",text:"You are not in the factory."}
+execute if entity @s[tag=ot.waiting] run return run function ore_tycoon:generated_scopes/generated_365a604
+execute unless entity @s[tag=ot.in] run return run title @s actionbar {type:text,color:red,text:"You are not in the factory."}
 function ore_tycoon:player/cleanup
 execute store result storage ore_tycoon:data args.id int 1 run scoreboard players get @s ot.pid
 data remove storage ore_tycoon:data args.return
@@ -12,4 +12,4 @@ data modify storage ore_tycoon:data args.yaw set from storage ore_tycoon:data ar
 data modify storage ore_tycoon:data args.pitch set from storage ore_tycoon:data args.return.rotation[1]
 data modify storage ore_tycoon:data args.dimension set from storage ore_tycoon:data args.return.dimension
 function ore_tycoon:player/teleport_back with storage ore_tycoon:data args
-title @s actionbar {type:"text",color:"gold",text:"See you soon! Your drills keep mining while you are away."}
+title @s actionbar {type:text,color:gold,text:"See you soon! Your drills keep mining while you are away."}

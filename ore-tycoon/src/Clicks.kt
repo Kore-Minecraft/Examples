@@ -15,8 +15,8 @@ import io.github.ayfri.kore.functions.function
 import io.github.ayfri.kore.generated.arguments.types.AdvancementArgument
 
 /**
- * The criteria have no entity condition: 26.2 reads it as an entity predicate, 26.3 as a loot condition and refuses to
- * load the world otherwise. The reward function filters the clicked entity itself.
+ * The criteria have no entity condition: 26.3 reads it as a loot condition and refuses to load the world otherwise. The
+ * reward function filters the clicked entity itself.
  */
 private enum class Click(val field: String, val relation: Relation, val criterion: AdvancementCriteria.() -> Unit) {
 	USE("interaction", Relation.TARGET, { playerInteractedWithEntity("click") }),

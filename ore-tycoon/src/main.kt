@@ -54,8 +54,8 @@ fun main() {
 		iconPath("ore-tycoon/pack.png")
 
 		pack {
-			minFormat(107, 1)
-			maxFormat(107)
+			minFormat(121, 0)
+			maxFormat(121)
 			description = textComponent("Ore Tycoon", Color.GOLD) + text(", an idle mining tycoon made with Kore", Color.GRAY)
 		}
 

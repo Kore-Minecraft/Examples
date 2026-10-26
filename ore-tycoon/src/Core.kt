@@ -9,9 +9,9 @@ import io.github.ayfri.kore.commands.PlaySoundMixer
 import io.github.ayfri.kore.commands.execute.Anchor
 import io.github.ayfri.kore.commands.execute.execute
 import io.github.ayfri.kore.commands.function
-import io.github.ayfri.kore.commands.particle.particles
-import io.github.ayfri.kore.commands.particle.types.block
+import io.github.ayfri.kore.commands.particle.particle
 import io.github.ayfri.kore.commands.playSound
+import io.github.ayfri.kore.data.particle.blockParticle
 import io.github.ayfri.kore.functions.function
 import io.github.ayfri.kore.generated.SoundEvents
 import io.github.ayfri.kore.helpers.displays.entities.BillboardMode
@@ -28,7 +28,7 @@ class Core(dataPack: DataPack, economy: Economy, formatter: NumberFormatter, hud
 		Level.entries.forEach { stage ->
 			execute {
 				ifCondition { level.value equalTo stage.number }
-				run { particles { block(block(stage.core.asId().substringAfter(':')), vec3(), vec3(0.2, 0.2, 0.2), 0.0, 6) } }
+				run { particle(blockParticle(block(stage.core.asId().substringAfter(':'))), vec3(), vec3(0.2, 0.2, 0.2), 0.0, 6) }
 			}
 		}
 	}

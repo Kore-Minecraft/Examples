@@ -1,6 +1,6 @@
 ## 1.0.0
 
-First release of **Ore Tycoon**, for Minecraft Java 26.2.
+First release of **Ore Tycoon**, for Minecraft Java 26.3.
 
 - A floating island factory built above `x=0 z=0`, reached from the chat or the pause screen menu.
 - A giant core to mine by hitting or right-clicking it, evolving through 8 levels up to a beacon.

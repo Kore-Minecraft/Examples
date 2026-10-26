@@ -11,7 +11,7 @@
 | Modrinth slug | `ore-tycoon` (the `modrinth` value of the workflow's `ore-tycoon` case)                                                         |
 | Project type  | Data Pack                                                                                                                       |
 | Summary       | An idle mining tycoon in the sky: punch a giant ore, buy drills, evolve the core and mine a billion coins. Pure vanilla, co-op. |
-| Versions      | 26.2                                                                                                                            |
+| Versions      | 26.3                                                                                                                            |
 | Environment   | Server side, works in singleplayer                                                                                              |
 | Categories    | Game Mechanics, Minigame, Multiplayer                                                                                           |
 | License       | GPL-3.0-or-later                                                                                                                |

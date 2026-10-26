@@ -13,6 +13,6 @@ function ore_tycoon:economy/earn
 scoreboard players operation #format.input ot.data = #gain ot.data
 function ore_tycoon:format/number
 data modify storage ore_tycoon:data hud.lucky set from storage ore_tycoon:data hud.out
-title @s title {type:"text",bold:1b,color:"gold",text:"LUCKY!"}
-title @s subtitle [{type:"text",text:""},{type:"text",color:"yellow",text:"+"},{type:"nbt",color:"yellow",interpret:1b,nbt:"hud.lucky",source:"storage",storage:"ore_tycoon:data"},{type:"text",color:"gold",text:" ⛃"}]
-tellraw @a[tag=ot.in] [{type:"text",text:""},{type:"text",bold:1b,color:"gold",text:"⛏ Ore Tycoon "},{type:"text",color:"dark_gray",text:"» "},{type:"selector",selector:"@s"},{type:"text",color:"yellow",text:" found a Golden Nugget worth "},{type:"nbt",color:"gold",interpret:1b,nbt:"hud.lucky",source:"storage",storage:"ore_tycoon:data"},{type:"text",color:"gold",text:" ⛃"}]
+title @s title {type:text,bold:1b,color:gold,text:"LUCKY!"}
+title @s subtitle [{type:text,text:""},{type:text,color:yellow,text:"+"},{type:nbt,color:yellow,interpret:1b,nbt:"hud.lucky",source:storage,storage:"ore_tycoon:data"},{type:text,color:gold,text:" ⛃"}]
+tellraw @a[tag=ot.in] [{type:text,text:""},{type:text,bold:1b,color:gold,text:"⛏ Ore Tycoon "},{type:text,color:dark_gray,text:"» "},{type:selector,selector:"@s"},{type:text,color:yellow,text:" found a Golden Nugget worth "},{type:nbt,color:gold,interpret:1b,nbt:"hud.lucky",source:storage,storage:"ore_tycoon:data"},{type:text,color:gold,text:" ⛃"}]

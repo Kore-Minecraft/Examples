@@ -8,11 +8,12 @@ import io.github.ayfri.kore.arguments.types.literals.self
 import io.github.ayfri.kore.commands.PlaySoundMixer
 import io.github.ayfri.kore.commands.execute.execute
 import io.github.ayfri.kore.commands.function
-import io.github.ayfri.kore.commands.particle.particles
-import io.github.ayfri.kore.commands.particle.types.dust
+import io.github.ayfri.kore.commands.particle.particle
 import io.github.ayfri.kore.commands.playSound
 import io.github.ayfri.kore.commands.returnIf
 import io.github.ayfri.kore.commands.schedule
+import io.github.ayfri.kore.data.particle.dustParticle
+import io.github.ayfri.kore.data.particle.simpleParticle
 import io.github.ayfri.kore.functions.function
 import io.github.ayfri.kore.generated.Particles
 import io.github.ayfri.kore.generated.SoundEvents
@@ -95,7 +96,7 @@ class Economy(dataPack: DataPack, formatter: NumberFormatter) {
 }
 
 class Shop(dataPack: DataPack, economy: Economy, formatter: NumberFormatter, factory: Factory, hud: Hud) {
-	private val ring = dataPack.drawCircle("purchase_ring", Particles.END_ROD, radius = 1.2, points = 16)
+	private val ring = dataPack.drawCircle("purchase_ring", simpleParticle(Particles.END_ROD), radius = 1.2, points = 16)
 
 	/** Tells the buyer how much they miss, the difference being in [temp]. */
 	private val tooPoor = dataPack.function("too_poor", directory = "shop") {
@@ -129,7 +130,7 @@ class Shop(dataPack: DataPack, economy: Economy, formatter: NumberFormatter, fac
 				positioned(machine)
 				run { function(ring) }
 			}
-			particles { dust(tier.color, 1.4, machine, vec3(0.4, 0.4, 0.4), 0.0, 24) }
+			particle(dustParticle(tier.color, 1.4f), machine, vec3(0.4, 0.4, 0.4), 0.0, 24)
 			playSound(SoundEvents.Block.Anvil.USE, PlaySoundMixer.MASTER, self(), vec3(), volume = 0.5, pitch = 1.6)
 			playSound(SoundEvents.Entity.ExperienceOrb.PICKUP, PlaySoundMixer.MASTER, self(), vec3(), volume = 0.8)
 			actionBar(textComponent("${tier.title} bought! ", tier.color) + text("You own ", Color.GRAY) + count.text(Color.WHITE))

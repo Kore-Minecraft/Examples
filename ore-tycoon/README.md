@@ -27,7 +27,7 @@ Written in Kotlin with [Kore](https://kore.ayfri.com): 1,800 lines of Kotlin gen
 
 ## Try it
 
-Minecraft **Java 26.2**.
+Minecraft **Java 26.3**.
 
 1. Download `ore-tycoon-<version>.zip` from Modrinth, or build it (see below).
 2. Put the zip in the `datapacks` folder of a world **while the world is closed**, or pick it in the *Data Packs* screen
@@ -114,7 +114,7 @@ The pack is generated in `out/ore_tycoon`. With the `CI` environment variable se
 
 ## Limitations
 
-- Minecraft 26.2 only.
+- Minecraft 26.3 only.
 - One factory per world, shared by everyone.
 - Sidebar slots are global in vanilla, so the sidebar is shown through the gold team's slot: players in the factory
   join the `ot.players` team and leave it on their way out, losing any team they had before.

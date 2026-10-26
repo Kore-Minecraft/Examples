@@ -18,6 +18,7 @@ import io.github.ayfri.kore.commands.returnIf
 import io.github.ayfri.kore.commands.summon
 import io.github.ayfri.kore.commands.tellraw
 import io.github.ayfri.kore.commands.title
+import io.github.ayfri.kore.data.particle.simpleParticle
 import io.github.ayfri.kore.functions.function
 import io.github.ayfri.kore.generated.EntityTypes
 import io.github.ayfri.kore.generated.Items
@@ -56,7 +57,7 @@ private fun rocketNbt(shape: String) = nbt {
 class Progress(dataPack: DataPack, economy: Economy, factory: Factory, hud: Hud) {
 	private val helix = dataPack.drawShape("level_helix") {
 		shape = Shape.HELIX
-		particle = Particles.TOTEM_OF_UNDYING
+		particle = simpleParticle(Particles.TOTEM_OF_UNDYING)
 		radius = 2.3
 		height = 5.0
 		turns = 3
