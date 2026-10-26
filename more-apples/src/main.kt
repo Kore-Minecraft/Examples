@@ -9,9 +9,8 @@ import io.github.ayfri.kore.features.loottables.*
 import io.github.ayfri.kore.features.loottables.entries.*
 import io.github.ayfri.kore.features.predicates.Predicate
 import io.github.ayfri.kore.features.predicates.conditions.*
-import io.github.ayfri.kore.features.predicates.providers.constant
-import io.github.ayfri.kore.features.predicates.providers.uniform
 import io.github.ayfri.kore.features.predicates.sub.predicates
+import io.github.ayfri.kore.generated.ContextKeySets
 import io.github.ayfri.kore.generated.Enchantments
 import io.github.ayfri.kore.generated.Items
 import io.github.ayfri.kore.pack.pack
@@ -58,21 +57,21 @@ fun main() {
 			val leafId = leaf.asString().removePrefix("minecraft:")
 			lootTable("blocks/$leafId") {
 				namespace = "minecraft"
-				type = LootTableType.BLOCK
+				type = ContextKeySets.BLOCK
 
 				pool {
-					bonusRolls = constant(0f)
+					bonusRolls(0f)
 					entries {
 						alternatives {
 							children {
 								item(leaf) {
-									conditions {
+									condition {
 										withSilkTouchShears()
 									}
 								}
 
 								item(sapling) {
-									conditions {
+									condition {
 										survivesExplosion()
 										tableBonus(Enchantments.FORTUNE, 0.05f, 0.0625f, 0.083333f, 0.1f)
 									}
@@ -82,38 +81,38 @@ fun main() {
 					}
 				}
 				pool {
-					bonusRolls = constant(0f)
+					bonusRolls(0f)
 					entries {
 						item(Items.STICK) {
-							conditions {
+							condition {
 								tableBonus(Enchantments.FORTUNE, 0.02f, 0.022222f, 0.025f, 0.033333f, 0.1f)
 							}
-							functions {
-								setCount(uniform(1f, 2f), false)
+							modifier {
+								setCount(1..2, false)
 								explosionDecay()
 							}
 						}
 					}
 
-					conditions {
+					condition {
 						inverted {
 							withSilkTouchShears()
 						}
 					}
 				}
 
-				pool(constant(2f)) {
-					bonusRolls = constant(0f)
+				pool(2) {
+					bonusRolls(0f)
 					entries {
 						item(Items.APPLE) {
-							conditions {
+							condition {
 								survivesExplosion()
 								tableBonus(Enchantments.FORTUNE, 0.005f, 0.005555f, 0.00625f, 0.008333f, 0.025f)
 							}
 						}
 					}
 
-					conditions {
+					condition {
 						inverted {
 							withSilkTouchShears()
 						}

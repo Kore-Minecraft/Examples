@@ -3,13 +3,13 @@
 		"description": "Smoke flesh for leather, and smelt it for brown dye!",
 		"min_format": 81,
 		"max_format": [
-			107,
-			1
+			121,
+			0
 		],
-		"pack_format": 107,
+		"pack_format": 121,
 		"supported_formats": {
 			"min_inclusive": 81,
-			"max_inclusive": 107
+			"max_inclusive": 121
 		}
 	}
 }

@@ -42,7 +42,7 @@ jobs:
             more-apples)
               zip=more-apples; title="More Apples (Kore)"; modrinth=PEOwL2qD; game_versions="" ;;
             ore-tycoon)
-              zip=ore_tycoon; title="Ore Tycoon"; modrinth=ore-tycoon; game_versions="26.2" ;;
+              zip=ore_tycoon; title="Ore Tycoon"; modrinth=ore-tycoon; game_versions="26.3" ;;
             *)
               echo "::error::Unknown module '$module', tag the release like ore-tycoon-v1.0.0"; exit 1 ;;
           esac

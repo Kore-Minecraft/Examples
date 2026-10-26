@@ -25,18 +25,16 @@ fun main() {
 		}
 
 		recipes {
-			smelting("browndye_smelt") {
+			smelting("browndye_smelt", cookingTime = 200) {
 				ingredient(Items.ROTTEN_FLESH)
 				result(Items.BROWN_DYE)
 				experience = 0.1
-				cookingTime = 200
 			}
 
-			smoking("leather_smoke") {
+			smoking("leather_smoke", cookingTime = 100) {
 				ingredient(Items.ROTTEN_FLESH)
 				result(Items.LEATHER)
 				experience = 0.1
-				cookingTime = 100
 			}
 		}
 
