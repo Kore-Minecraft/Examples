@@ -103,11 +103,14 @@ fun Function.layer(y: Int, blockAt: (x: Int, z: Int) -> BlockArgument?) {
 }
 
 class Factory(dataPack: DataPack) {
-	/** Removes every block and entity of the factory, the blocks in two fills to stay under the 32768 blocks limit. */
+	/**
+	 * Removes every block and entity of the factory, the blocks in two fills to stay under the 32768 blocks limit. Strict
+	 * fills skip neighbor updates, else the flowers and lanterns pop off as items when the block under them goes first.
+	 */
 	val clear = dataPack.function("clear", directory = "factory") {
 		kill(Entities.all)
-		fill(vec3(-REACH, FLOOR_Y - ISLAND_DEPTH - 2, -REACH), vec3(REACH, FLOOR_Y - 2, REACH), Blocks.AIR)
-		fill(vec3(-REACH, FLOOR_Y - 1, -REACH), vec3(REACH, FLOOR_Y + 8, REACH), Blocks.AIR)
+		fill(vec3(-REACH, FLOOR_Y - ISLAND_DEPTH - 2, -REACH), vec3(REACH, FLOOR_Y - 2, REACH), Blocks.AIR, strict = true)
+		fill(vec3(-REACH, FLOOR_Y - 1, -REACH), vec3(REACH, FLOOR_Y + 8, REACH), Blocks.AIR, strict = true)
 	}
 
 	private val blocks = dataPack.function("blocks", directory = "factory") {
